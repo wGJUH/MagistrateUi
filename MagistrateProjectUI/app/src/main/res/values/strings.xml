@@ -11,4 +11,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hint_record_book">Record book number</string>
+    <string name="button_next">Next</string>
+    <string name="input_record_number">Please input your record number</string>
+    <string name="input_feel_registration_data">Please feel reg data</string>
+    <string name="hint_fio">Input you FIO</string>
+    <string name="hint_repeat_password">Please repeat password</string>
 </resources>

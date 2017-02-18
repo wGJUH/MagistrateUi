@@ -1,11 +1,15 @@
 package com.example.wgjuh.magistrateprojectui;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.example.wgjuh.magistrateprojectui.activity.Constants;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -25,15 +29,16 @@ public class SqlHelper extends SQLiteOpenHelper {
     public static final int DB_VERSION = 1;
     private Context context;
     private SQLiteDatabase database;
-    public static SqlHelper getInstance(Context context){
-        if(instance != null)
+
+    public static SqlHelper getInstance(Context context) {
+        if (instance != null)
             return instance;
         else instance = new SqlHelper(context);
         return instance;
     }
 
 
-    private SqlHelper(Context context){
+    private SqlHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
         this.context = context;
         if (isDatabaseExists()) {
@@ -50,12 +55,14 @@ public class SqlHelper extends SQLiteOpenHelper {
             }
         }
     }
+
     public void opendatabase() throws SQLException {
         //Open the database
         String mypath = DB_LOCATION + DB_NAME;
         database = SQLiteDatabase.openDatabase(mypath, null, SQLiteDatabase.OPEN_READWRITE);
 
     }
+
     public boolean isDatabaseExists() {
         boolean checkdb = false;
         try {
@@ -65,7 +72,9 @@ public class SqlHelper extends SQLiteOpenHelper {
         } catch (SQLiteException e) {
             System.out.println("Database doesn't exist");
         }
-        return checkdb;    }
+        return checkdb;
+    }
+
     public void createdatabase() throws IOException {
         long start = System.currentTimeMillis();
         if (isDatabaseExists()) {
@@ -81,6 +90,7 @@ public class SqlHelper extends SQLiteOpenHelper {
         }
         System.out.println(" createDB method finished: " + (System.currentTimeMillis() - start));
     }
+
     private void copydatabase() throws IOException {
         //Open your local db as the input stream
         System.out.println(" START COPYING");
@@ -113,45 +123,85 @@ public class SqlHelper extends SQLiteOpenHelper {
         database.setVersion(DB_VERSION);
         close();
     }
-    public boolean isUserExist(String email, String password){
+
+    public boolean isUserExist(String email, String password) {
         boolean isExist;
         String sqlCmd = "select * from students where email = ? and password = ?";
         opendatabase();
-         isExist = database.rawQuery(sqlCmd, new String[]{email,password}).moveToFirst();
+        isExist = database.rawQuery(sqlCmd, new String[]{email, password}).moveToFirst();
         close();
         return isExist;
     }
-    public int getIdByEmail(String email){
+
+    public int getIdByEmail(String email) {
         int id = -7733;
         String sqlCmd = "select id from students where email = ?";
         opendatabase();
-        Cursor cursor = database.rawQuery(sqlCmd,new String[]{email});
-        if(cursor.moveToFirst())
+        Cursor cursor = database.rawQuery(sqlCmd, new String[]{email});
+        if (cursor.moveToFirst())
             id = cursor.getInt(0);
+        cursor.close();
         close();
         return id;
     }
-    public boolean isEmailExist(String email){
+
+    public boolean isEmailExist(String email) {
         boolean isExist;
         String sqlCmd = "select id from students where email = ?";
         opendatabase();
-        Cursor cursor = database.rawQuery(sqlCmd,new String[]{""+email});
+        isExist = database.rawQuery(sqlCmd, new String[]{"" + email}).moveToFirst();
         close();
-        return cursor.moveToFirst();
+        return isExist;
     }
-
+    public boolean addNewUser(String fio, String email, String password, String recordBookNumber){
+        boolean isOk = false;
+       // String sqlCmd = "update students set email = ?, password =?, name =? where record_book = ?";
+        opendatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("email",email);
+        contentValues.put("name",fio);
+        contentValues.put("password",password);
+        int updated = database.update("students",contentValues,"record_book =?",new String[]{recordBookNumber});
+        if(updated == 1)
+        {
+            isOk = !isOk;
+        }
+        close();
+        return isOk;
+    }
+    public void getRecordBooks(){
+        String sqlCmd = "select record_book from students ";
+        opendatabase();
+        Cursor cursor = database.rawQuery(sqlCmd, new String[]{});
+        if (cursor.moveToFirst())
+            do{
+                Log.d(Constants.TAG,cursor.getString(0));
+            }while (cursor.moveToNext());
+        cursor.close();
+        close();
+    }
     /**
      * Для проверки регистрации по зачетной книжке
+     *
      * @return
      */
-    public boolean isRecordBookExist(String record_book){
+    public boolean isRecordBookExist(String record_book) {
         boolean isExist;
         String sqlCmd = "select * from students where record_book = ?";
         opendatabase();
-        Cursor cursor = database.rawQuery(sqlCmd,new String[]{""+record_book});
+        isExist = database.rawQuery(sqlCmd, new String[]{"" + record_book}).moveToFirst();
         close();
-        return cursor.moveToFirst();
+        return isExist;
     }
+    public boolean isRecordBookRegistr(String record_book){
+        boolean isExist;
+        String sqlCmd = "select * from students where record_book = ? and email IS NOT NULL";
+        opendatabase();
+        isExist = database.rawQuery(sqlCmd,new String[]{record_book}).moveToFirst();
+        close();
+        return isExist;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
 
