@@ -11,6 +11,8 @@ import java.util.HashMap;
 
 public class Constants {
     public static final String USER_ID = "USER_ID";
+    public static final String ARTICLE_ID = "ARTICLE_ID";
+    public static final String THEME_ID = "THEME_ID";
     public static final String TAG = "MAGISTRATE_UI_TEST";
     public static final String TAG_LOGIN_FRAGMENT = LoginFragment.class.toString();
     public static final String TAG_REGISTRATION_FRAGMENT = RegistrationFragment.class.getName();

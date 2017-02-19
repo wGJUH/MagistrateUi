@@ -206,21 +206,38 @@ public class SqlHelper extends SQLiteOpenHelper {
         return articleId;
     }
 
-    public ArrayList<String> getThemes(int articleId){
-        ArrayList<String> themes = new ArrayList<>();
-        String sqlCmd = "select name from manage_themes_articles left join themes on theme_id = themes.id where article_id = ?";
+    public ArrayList<ArticleThemeValue> getThemes(int articleId){
+        ArrayList<ArticleThemeValue> themes = new ArrayList<>();
+        ArticleThemeValue articleThemeValue;
+        String sqlCmd = "select id, name from manage_themes_articles left join themes on theme_id = themes.id where article_id = ?";
         opendatabase();
         Cursor cursor = database.rawQuery(sqlCmd,new String[]{Integer.toString(articleId)});
         if(cursor.moveToFirst()){
             do {
-                themes.add(cursor.getString(cursor.getColumnIndex("name")));
+                articleThemeValue = new ArticleThemeValue(cursor.getString(cursor.getColumnIndex("name")),cursor.getInt(cursor.getColumnIndex("id")));
+                themes.add(articleThemeValue);
             }while (cursor.moveToNext());
         }
         cursor.close();
         close();
         return themes;
     }
-
+    public ArrayList<ArticleThemeValue> getQuestionsForTrain(int themeId){
+        ArrayList<ArticleThemeValue> questions = new ArrayList<>();
+        ArticleThemeValue articleThemeValue;
+        String sqlCmd = "select id, name from questions where theme_id = ?";
+        opendatabase();
+        Cursor cursor = database.rawQuery(sqlCmd,new String[]{Integer.toString(themeId)});
+        if(cursor.moveToFirst()){
+            do {
+                articleThemeValue = new ArticleThemeValue(cursor.getString(cursor.getColumnIndex("name")),cursor.getInt(cursor.getColumnIndex("id")));
+                questions.add(articleThemeValue);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return questions;
+    }
 
     public void getRecordBooks(){
         String sqlCmd = "select record_book from students ";

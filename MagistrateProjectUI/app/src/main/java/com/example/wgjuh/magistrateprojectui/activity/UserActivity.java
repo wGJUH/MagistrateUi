@@ -28,6 +28,7 @@ import com.example.wgjuh.magistrateprojectui.SqlHelper;
 import com.example.wgjuh.magistrateprojectui.fragments.AbstractFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.QuestionsFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.TextbookFragment;
+import com.example.wgjuh.magistrateprojectui.fragments.ThemesFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.UserFragment;
 
 import java.util.ArrayList;
@@ -151,7 +152,7 @@ public class UserActivity extends AppCompatActivity
         if (id == R.id.nav_textbook) {
             fragmentTransaction.replace(R.id.content_user_frame,new TextbookFragment(),TextbookFragment.class.getName());
         } else if (id == R.id.nav_questions) {
-            fragmentTransaction.replace(R.id.content_user_frame,QuestionsFragment.newInstance(sqlHelper.getArticlesIdForName(getSpinnerSelection())),QuestionsFragment.class.getName());
+            fragmentTransaction.replace(R.id.content_user_frame, ThemesFragment.newInstance(sqlHelper.getArticlesIdForName(getSpinnerSelection())),ThemesFragment.class.getName());
         } else if (id == R.id.nav_classmates) {
 
         } else if (id == R.id.nav_results) {
