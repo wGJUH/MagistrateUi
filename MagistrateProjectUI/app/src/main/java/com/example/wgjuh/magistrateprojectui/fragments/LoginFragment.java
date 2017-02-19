@@ -1,9 +1,7 @@
 package com.example.wgjuh.magistrateprojectui.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -16,7 +14,7 @@ import android.widget.EditText;
 
 import com.example.wgjuh.magistrateprojectui.R;
 import com.example.wgjuh.magistrateprojectui.SqlHelper;
-import com.example.wgjuh.magistrateprojectui.activity.Constants;
+import com.example.wgjuh.magistrateprojectui.Constants;
 import com.example.wgjuh.magistrateprojectui.activity.UserActivity;
 
 /**
@@ -27,7 +25,7 @@ import com.example.wgjuh.magistrateprojectui.activity.UserActivity;
  * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoginFragment extends Fragment implements View.OnClickListener {
+public class LoginFragment extends AbstractFragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -118,13 +116,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+/*
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(String tag);
     }
+*/
 
 
-    private void initFields(View rootView) {
+     void initFields(View rootView) {
         sqlHelper = SqlHelper.getInstance(getActivity());
         email = (EditText) rootView.findViewById(R.id.edit_text_login);
         password = (EditText) rootView.findViewById(R.id.edit_text_password);
@@ -132,7 +132,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         button_registration = (Button)rootView.findViewById(R.id.button_registration);
     }
 
-    private void setClickListeners() {
+     void setClickListeners() {
         button_login.setOnClickListener(this);
         button_registration.setOnClickListener(this);
     }

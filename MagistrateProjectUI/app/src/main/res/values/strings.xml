@@ -20,4 +20,10 @@
     <string name="input_feel_registration_data">Please feel reg data</string>
     <string name="hint_fio">Input you FIO</string>
     <string name="hint_repeat_password">Please repeat password</string>
+    <string name="nav_about_system">About system</string>
+    <string name="nav_results">Results</string>
+    <string name="nav_classmates">Classmates</string>
+    <string name="nav_questions">Questions</string>
+    <string name="nav_textbook">Textbook</string>
+    <string name="textbook_fragment">TextBook</string>
 </resources>

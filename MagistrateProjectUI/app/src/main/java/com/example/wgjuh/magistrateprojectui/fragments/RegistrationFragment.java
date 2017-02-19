@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.TextViewCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +19,7 @@ import android.widget.ViewSwitcher;
 
 import com.example.wgjuh.magistrateprojectui.R;
 import com.example.wgjuh.magistrateprojectui.SqlHelper;
-import com.example.wgjuh.magistrateprojectui.activity.Constants;
+import com.example.wgjuh.magistrateprojectui.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,7 +29,7 @@ import com.example.wgjuh.magistrateprojectui.activity.Constants;
  * Use the {@link RegistrationFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistrationFragment extends Fragment implements View.OnClickListener {
+public class RegistrationFragment extends AbstractFragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -92,7 +91,7 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
         return rootView;
     }
 
-    private void initFields(View rootView) {
+    void initFields(View rootView) {
         editTextRecorBook = (EditText) rootView.findViewById(R.id.edit_text_record_book);
         editTextEmail = (EditText) rootView.findViewById(R.id.edit_text_login);
         editTextPassword = (EditText) rootView.findViewById(R.id.edit_text_password);
@@ -104,7 +103,7 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
         viewSwitcher = ((ViewSwitcher) rootView.findViewById(R.id.switcher_registration));
     }
 
-    private void setClickListeners() {
+    void setClickListeners() {
         buttonNext.setOnClickListener(this);
         buttonRegistration.setOnClickListener(this);
     }
@@ -265,8 +264,9 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+
+/*    public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
+    }*/
 }

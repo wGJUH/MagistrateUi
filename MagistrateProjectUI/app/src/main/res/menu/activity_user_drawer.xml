@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<group>
+    <item android:id="@+id/nav_spinner"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="Article"
+        app:actionLayout="@layout/navigation_view_spinner_menu_item">
+    </item>
+</group>
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_textbook"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="@string/nav_textbook" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_questions"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="@string/nav_questions" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_classmates"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="@string/nav_classmates" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_results"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
+            android:title="@string/nav_results" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/nav_about_system" />
 
+    </group>
     <item android:title="Communicate">
         <menu>
             <item

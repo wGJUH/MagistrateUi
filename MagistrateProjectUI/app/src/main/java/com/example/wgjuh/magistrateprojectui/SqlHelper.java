@@ -9,13 +9,12 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.wgjuh.magistrateprojectui.activity.Constants;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 /**
  * Created by wGJUH on 18.02.2017.
@@ -144,6 +143,17 @@ public class SqlHelper extends SQLiteOpenHelper {
         close();
         return id;
     }
+    public int getGroupIdByUserId(int userId){
+        int groupId = -7733;
+        String sqlCmd = "select group_id from students where id = ?";
+        opendatabase();
+        Cursor cursor =  database.rawQuery(sqlCmd,new String[]{Integer.toString(userId)});
+        if (cursor.moveToNext())
+            groupId = cursor.getInt(cursor.getColumnIndex("group_id"));
+        cursor.close();
+        close();
+        return groupId;
+    }
 
     public boolean isEmailExist(String email) {
         boolean isExist;
@@ -169,6 +179,49 @@ public class SqlHelper extends SQLiteOpenHelper {
         close();
         return isOk;
     }
+    public ArrayList<String> getArticlesForGroupId(int groupId){
+        Log.d(Constants.TAG,"Try to get articles for group id");
+        ArrayList<String> articles = new ArrayList<>();
+        String sqlCmd = "select name from manage_groups_articles left join articles on article_id = articles.id where group_id = ?";
+        opendatabase();
+        Cursor cursor = database.rawQuery(sqlCmd,new String[]{Integer.toString(groupId)});
+        if(cursor.moveToFirst()){
+            do {
+                articles.add(cursor.getString(cursor.getColumnIndex("name")));
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return articles;
+    }
+    public int getArticlesIdForName(String name){
+        int articleId = -7733;
+        String sqlCmd = "select id from articles where name = ?";
+        opendatabase();
+        Cursor cursor = database.rawQuery(sqlCmd, new String[]{name});
+        if (cursor.moveToFirst())
+            articleId = cursor.getInt(cursor.getColumnIndex("id"));
+        cursor.close();
+        close();
+        return articleId;
+    }
+
+    public ArrayList<String> getThemes(int articleId){
+        ArrayList<String> themes = new ArrayList<>();
+        String sqlCmd = "select name from manage_themes_articles left join themes on theme_id = themes.id where article_id = ?";
+        opendatabase();
+        Cursor cursor = database.rawQuery(sqlCmd,new String[]{Integer.toString(articleId)});
+        if(cursor.moveToFirst()){
+            do {
+                themes.add(cursor.getString(cursor.getColumnIndex("name")));
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return themes;
+    }
+
+
     public void getRecordBooks(){
         String sqlCmd = "select record_book from students ";
         opendatabase();

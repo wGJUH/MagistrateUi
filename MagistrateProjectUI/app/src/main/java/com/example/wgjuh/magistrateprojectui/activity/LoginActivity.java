@@ -7,15 +7,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+
+import com.example.wgjuh.magistrateprojectui.Constants;
 import com.example.wgjuh.magistrateprojectui.R;
+import com.example.wgjuh.magistrateprojectui.fragments.AbstractFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.LoginFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.RegistrationFragment;
 
-import static com.example.wgjuh.magistrateprojectui.activity.Constants.*;
+import static com.example.wgjuh.magistrateprojectui.Constants.*;
 
-public class LoginActivity extends AppCompatActivity implements  LoginFragment.OnFragmentInteractionListener, RegistrationFragment.OnFragmentInteractionListener {
+public class LoginActivity extends AppCompatActivity implements AbstractFragment.OnFragmentInteractionListener {
     private FrameLayout frameLoginPage;
     private LoginFragment loginFragment;
     private Animation slide_in_left,slide_out_right;
@@ -42,8 +44,4 @@ public class LoginActivity extends AppCompatActivity implements  LoginFragment.O
                 .addToBackStack(Constants.TAG_REGISTRATION_FRAGMENT).commit();
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
 }
