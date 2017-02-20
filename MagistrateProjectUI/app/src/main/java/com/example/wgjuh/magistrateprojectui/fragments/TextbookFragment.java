@@ -1,14 +1,19 @@
 package com.example.wgjuh.magistrateprojectui.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.wgjuh.magistrateprojectui.Constants;
 import com.example.wgjuh.magistrateprojectui.R;
+import com.example.wgjuh.magistrateprojectui.SqlHelper;
+import com.example.wgjuh.magistrateprojectui.adapter.ListAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,10 +30,13 @@ public class TextbookFragment extends AbstractFragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private int articleId;
 
     private OnFragmentInteractionListener mListener;
+
+    private RecyclerView recyclerView;
+
+    private SqlHelper sqlHelper;
 
     public TextbookFragment() {
         // Required empty public constructor
@@ -38,16 +46,14 @@ public class TextbookFragment extends AbstractFragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param articleId Parameter 1.
      * @return A new instance of fragment TextbookFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TextbookFragment newInstance(String param1, String param2) {
+    public static TextbookFragment newInstance(int articleId) {
         TextbookFragment fragment = new TextbookFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(Constants.ARTICLE_ID, articleId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,8 +62,7 @@ public class TextbookFragment extends AbstractFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            articleId = getArguments().getInt(Constants.ARTICLE_ID);
         }
     }
 
@@ -65,7 +70,10 @@ public class TextbookFragment extends AbstractFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_textbook, container, false);
+        View rootView =inflater.inflate(R.layout.fragment_textbook, container, false);
+        initFields(rootView);
+        return rootView;
+
     }
     
 
@@ -88,7 +96,11 @@ public class TextbookFragment extends AbstractFragment {
 
     @Override
     void initFields(View rootView) {
-
+        sqlHelper = SqlHelper.getInstance(getActivity());
+        recyclerView = (RecyclerView)rootView.findViewById(R.id.library_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        Log.d(Constants.TAG,"TextBookRecive articleId = " + articleId);
+        recyclerView.setAdapter(new ListAdapter(this,sqlHelper.getBooksForArticle(articleId)));
     }
 
     @Override
@@ -96,14 +108,4 @@ public class TextbookFragment extends AbstractFragment {
 
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-*/
 }

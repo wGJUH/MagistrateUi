@@ -3,6 +3,7 @@ package com.example.wgjuh.magistrateprojectui.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,10 +43,10 @@ public class QuestionsFragment extends AbstractFragment {
     }
 
     // TODO: Rename and change types and number of parameters
-    public static QuestionsFragment newInstance(int articleId) {
+    public static QuestionsFragment newInstance(int themeId) {
         QuestionsFragment fragment = new QuestionsFragment();
         Bundle args = new Bundle();
-        args.putInt(THEME_ID, articleId);
+        args.putInt(THEME_ID, themeId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -91,7 +92,9 @@ public class QuestionsFragment extends AbstractFragment {
     @Override
     void initFields(View rootView) {
         recyclerView = (RecyclerView)rootView.findViewById(R.id.questions_recycler_view);
-        ListAdapter listAdapter = new ListAdapter(sqlHelper.getQuestionsForTrain(themeId));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        ListAdapter listAdapter = new ListAdapter(this,sqlHelper.getQuestionsForTrain(themeId));
         recyclerView.setAdapter(listAdapter);
     }
 

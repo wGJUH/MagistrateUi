@@ -203,6 +203,7 @@ public class SqlHelper extends SQLiteOpenHelper {
             articleId = cursor.getInt(cursor.getColumnIndex("id"));
         cursor.close();
         close();
+        Log.d(Constants.TAG,"getArticlesIdForName : " + articleId);
         return articleId;
     }
 
@@ -221,6 +222,25 @@ public class SqlHelper extends SQLiteOpenHelper {
         cursor.close();
         close();
         return themes;
+    }
+
+    public ArrayList<ArticleThemeValue> getBooksForArticle(int articleId){
+        ArrayList<ArticleThemeValue> books = new ArrayList<>();
+        ArticleThemeValue articleThemeValue;
+        String sqlCmd = "select books.id, books.name from manage_articles_books " +
+                "left join articles on article_id = articles.id " +
+                "left join books on book_id = books.id  where article_id = ? ";
+        opendatabase();
+        Cursor cursor = database.rawQuery(sqlCmd,new String[]{Integer.toString(articleId)});
+        if(cursor.moveToFirst()){
+            do {
+                articleThemeValue = new ArticleThemeValue(cursor.getString(cursor.getColumnIndex("name")),cursor.getInt(cursor.getColumnIndex("id")));
+                books.add(articleThemeValue);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return books;
     }
     public ArrayList<ArticleThemeValue> getQuestionsForTrain(int themeId){
         ArrayList<ArticleThemeValue> questions = new ArrayList<>();

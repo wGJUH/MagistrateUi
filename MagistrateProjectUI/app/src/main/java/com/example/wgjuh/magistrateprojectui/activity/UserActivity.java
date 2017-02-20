@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
@@ -150,7 +151,7 @@ public class UserActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_textbook) {
-            fragmentTransaction.replace(R.id.content_user_frame,new TextbookFragment(),TextbookFragment.class.getName());
+            fragmentTransaction.replace(R.id.content_user_frame,TextbookFragment.newInstance(sqlHelper.getArticlesIdForName(getSpinnerSelection())),TextbookFragment.class.getName());
         } else if (id == R.id.nav_questions) {
             fragmentTransaction.replace(R.id.content_user_frame, ThemesFragment.newInstance(sqlHelper.getArticlesIdForName(getSpinnerSelection())),ThemesFragment.class.getName());
         } else if (id == R.id.nav_classmates) {
@@ -179,11 +180,26 @@ public class UserActivity extends AppCompatActivity
         sharedPreferences = getSharedPreferences(ARTICLE_PREF,MODE_PRIVATE);
         switch (view.getId()){
             case android.R.id.text1:
+
+                returnToUserFragment();
                 sharedPreferences.edit().putString(Constants.LAST_ARTICLE, getSpinnerSelection()).apply();
                 toolbar.setTitle(getSpinnerSelection());
                 break;
             default:
                 break;
+        }
+    }
+
+    private void returnToUserFragment() {
+        boolean isVisible = getSupportFragmentManager().findFragmentByTag(UserFragment.class.getName()).isVisible();
+        if(!isVisible) {
+            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            for (Fragment fragment:getSupportFragmentManager().getFragments()                         ) {
+                getFragmentTransaction().remove(fragment).commit();
+            }
+            getFragmentTransaction()
+                    .add(R.id.content_user_frame, UserFragment.newInstance(Integer.toString(userId)), UserFragment.class.getName())
+                    .commit();
         }
     }
 

@@ -91,7 +91,7 @@ public class ThemesFragment extends AbstractFragment {
         sqlHelper = SqlHelper.getInstance(getActivity());
         themesRecyclerView = (RecyclerView) rootView.findViewById(R.id.themes_recycler_view);
         themesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        themesRecyclerView.setAdapter(new ListAdapter(sqlHelper.getThemes(articleId)));
+        themesRecyclerView.setAdapter(new ListAdapter(this, sqlHelper.getThemes(articleId)));
 
     }
 
