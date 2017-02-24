@@ -36,7 +36,7 @@ public class QuestionsFragment extends AbstractFragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private SqlHelper sqlHelper;
+
 
     public QuestionsFragment() {
         // Required empty public constructor
@@ -58,16 +58,7 @@ public class QuestionsFragment extends AbstractFragment {
             themeId = getArguments().getInt(THEME_ID);
         }
         Log.d(Constants.TAG,"QuestionsFragment for Article: " + themeId);
-        sqlHelper = SqlHelper.getInstance(getActivity());
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_questions, container, false);
-        initFields(rootView);
-        return rootView;
+        this.setLayoutId(R.layout.fragment_questions);
     }
 
 

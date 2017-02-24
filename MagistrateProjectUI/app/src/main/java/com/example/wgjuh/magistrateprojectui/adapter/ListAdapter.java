@@ -57,10 +57,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         return items.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public TextView textView;
+    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        TextView textView;
         AbstractFragment fragment;
-        public ViewHolder(AbstractFragment fragment, View itemView) {
+        ViewHolder(AbstractFragment fragment, View itemView) {
             super(itemView);
             if(fragment instanceof ThemesFragment || fragment instanceof  QuestionsFragment) {
                 textView = (TextView) itemView;

@@ -31,7 +31,6 @@ public class LoginFragment extends AbstractFragment implements View.OnClickListe
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private EditText email, password, recordBook;
-    private SqlHelper sqlHelper;
     private Button button_login, button_registration;
     private Context context;
     // TODO: Rename and change types of parameters
@@ -69,16 +68,8 @@ public class LoginFragment extends AbstractFragment implements View.OnClickListe
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }*/
+        this.setLayoutId(R.layout.fragment_login);
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_login, container, false);
-        initFields(v);
-        setClickListeners();
-        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -125,7 +116,6 @@ public class LoginFragment extends AbstractFragment implements View.OnClickListe
 
 
      void initFields(View rootView) {
-        sqlHelper = SqlHelper.getInstance(getActivity());
         email = (EditText) rootView.findViewById(R.id.edit_text_login);
         password = (EditText) rootView.findViewById(R.id.edit_text_password);
         button_login = (Button) rootView.findViewById(R.id.button_login);

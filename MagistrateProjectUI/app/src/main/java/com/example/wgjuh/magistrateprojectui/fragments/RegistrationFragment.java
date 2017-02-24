@@ -44,7 +44,6 @@ public class RegistrationFragment extends AbstractFragment implements View.OnCli
     private EditText editTextRecorBook, editTextEmail, editTextPassword, editTextRepeatPassword, editTextFio;
     private TextView textViewRecordBook;
     private Button buttonNext, buttonRegistration;
-    private SqlHelper sqlHelper;
     private ViewSwitcher viewSwitcher;
 
     private Animation slide_in_left, slide_out_right;
@@ -74,22 +73,9 @@ public class RegistrationFragment extends AbstractFragment implements View.OnCli
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sqlHelper = SqlHelper.getInstance(getActivity());
- /*       if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
+        this.setLayoutId(R.layout.fragment_registration);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_registration, container, false);
-        initFields(rootView);
-        setClickListeners();
-        return rootView;
-    }
 
     void initFields(View rootView) {
         editTextRecorBook = (EditText) rootView.findViewById(R.id.edit_text_record_book);

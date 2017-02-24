@@ -27,12 +27,20 @@ import com.example.wgjuh.magistrateprojectui.Constants;
 import com.example.wgjuh.magistrateprojectui.R;
 import com.example.wgjuh.magistrateprojectui.SqlHelper;
 import com.example.wgjuh.magistrateprojectui.fragments.AbstractFragment;
+import com.example.wgjuh.magistrateprojectui.fragments.ClassmatesFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.QuestionsFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.TextbookFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.ThemesFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.UserFragment;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import static com.example.wgjuh.magistrateprojectui.Constants.ARTICLE_PREF;
 import static com.example.wgjuh.magistrateprojectui.Constants.LAST_ARTICLE;
@@ -49,6 +57,7 @@ public class UserActivity extends AppCompatActivity
     private SharedPreferences sharedPreferences;
     private Toolbar toolbar;
     private String currentArticle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +67,8 @@ public class UserActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         userId = getUserConfig().getInt(Constants.USER_ID);
         userFragment = UserFragment.newInstance(Integer.toString(userId));
+
+
         getFragmentTransaction()
                 .add(R.id.content_user_frame, userFragment, UserFragment.class.getName()).commit();
 
@@ -85,6 +96,10 @@ public class UserActivity extends AppCompatActivity
         spinner.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,sqlHelper.getArticlesForGroupId(sqlHelper.getGroupIdByUserId(userId))));
         spinner.setSelection(getIndexOfCurrentSharedArticle());
         spinner.setOnItemSelectedListener(this);
+
+
+
+
     }
 
 
@@ -155,7 +170,7 @@ public class UserActivity extends AppCompatActivity
         } else if (id == R.id.nav_questions) {
             fragmentTransaction.replace(R.id.content_user_frame, ThemesFragment.newInstance(sqlHelper.getArticlesIdForName(getSpinnerSelection())),ThemesFragment.class.getName());
         } else if (id == R.id.nav_classmates) {
-
+            fragmentTransaction.replace(R.id.content_user_frame, ClassmatesFragment.newInstance(sqlHelper.getGroupIdByUserId(userId),userId),ClassmatesFragment.class.getName());
         } else if (id == R.id.nav_results) {
 
         } else if (id == R.id.nav_about) {

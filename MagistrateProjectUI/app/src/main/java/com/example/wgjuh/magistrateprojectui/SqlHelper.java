@@ -270,6 +270,33 @@ public class SqlHelper extends SQLiteOpenHelper {
         cursor.close();
         close();
     }
+
+    public ArrayList<SingleUser> getClassmatesByGroupId(int groupId, int userId){
+        ArrayList<SingleUser> users = new ArrayList<>();
+        String sqlCmd = "select students.id, students.name as 'student_name', groups.name as 'group_name' " +
+                "from students " +
+                "left join groups " +
+                "on group_id = groups.id " +
+                "where group_id = ? " +
+                "and email notnull " +
+                "and students.id != ?";
+        SingleUser singleUser;
+        opendatabase();
+            Cursor cursor = database.rawQuery(sqlCmd,new String[]{Integer.toString(groupId), Integer.toString(userId)});
+        if (cursor.moveToFirst()){
+            do {
+                singleUser = new SingleUser();
+                singleUser.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                singleUser.setName(cursor.getString(cursor.getColumnIndex("student_name")));
+                singleUser.setGroupName(cursor.getString(cursor.getColumnIndex("group_name")));
+                singleUser.setGroupId(groupId);
+                users.add(singleUser);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return users;
+    }
     /**
      * Для проверки регистрации по зачетной книжке
      *

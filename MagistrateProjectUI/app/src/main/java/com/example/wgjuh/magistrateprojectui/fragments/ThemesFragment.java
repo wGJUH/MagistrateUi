@@ -35,8 +35,6 @@ public class ThemesFragment extends AbstractFragment {
     private OnFragmentInteractionListener mListener;
 
     private RecyclerView themesRecyclerView;
-    private SqlHelper sqlHelper;
-
     public ThemesFragment() {
         // Required empty public constructor
     }
@@ -57,15 +55,7 @@ public class ThemesFragment extends AbstractFragment {
         if (getArguments() != null) {
             articleId = getArguments().getInt(Constants.ARTICLE_ID);
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_themes, container, false);
-        initFields(rootView);
-        return rootView;
+        this.setLayoutId(R.layout.fragment_themes);
     }
 
 
@@ -88,7 +78,6 @@ public class ThemesFragment extends AbstractFragment {
 
     @Override
     void initFields(View rootView) {
-        sqlHelper = SqlHelper.getInstance(getActivity());
         themesRecyclerView = (RecyclerView) rootView.findViewById(R.id.themes_recycler_view);
         themesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         themesRecyclerView.setAdapter(new ListAdapter(this, sqlHelper.getThemes(articleId)));

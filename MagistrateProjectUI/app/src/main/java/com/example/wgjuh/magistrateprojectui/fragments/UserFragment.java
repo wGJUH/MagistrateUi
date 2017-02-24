@@ -1,6 +1,7 @@
 package com.example.wgjuh.magistrateprojectui.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,6 +12,16 @@ import android.widget.TextView;
 
 import com.example.wgjuh.magistrateprojectui.Constants;
 import com.example.wgjuh.magistrateprojectui.R;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.utils.EntryXComparator;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +36,7 @@ public class UserFragment extends AbstractFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private LineChart lineChart;
     // TODO: Rename and change types of parameters
     private String userId;
 
@@ -88,6 +99,22 @@ public class UserFragment extends AbstractFragment {
     @Override
     void initFields(View rootView) {
         textView_user = (TextView)rootView.findViewById(R.id.text_user_fragment);
+        lineChart = (LineChart)rootView.findViewById(R.id.chart);
+         /*
+        Trying charts
+         */
+/*        List<Entry> entries = new ArrayList<Entry>();
+        for (int i =0 ; i < 10; i++)
+            entries.add(new Entry(i,i));
+        //Collections.sort(entries, new EntryXComparator());
+        LineDataSet dataSet = new LineDataSet(entries,"LEGEND");
+        dataSet.setValueTextColor(Color.WHITE);
+        dataSet.setValueTextSize(9f);
+        LineData lineData = new LineData(dataSet);
+        lineData.setValueTextColor(Color.GREEN);
+        lineData.setValueTextSize(9f);
+        lineChart.setData(lineData);*/
+        //lineChart.invalidate();
     }
 
     @Override
