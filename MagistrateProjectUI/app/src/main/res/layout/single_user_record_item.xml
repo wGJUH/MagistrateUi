@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:weightSum="10">
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/user_record_pie_chart"
+        android:layout_width="80dp"
+        android:layout_height="80dp">
+    </com.github.mikephil.charting.charts.PieChart>
+    <TextView
+        android:id="@+id/text_user_record"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:maxLines="1"
+        android:gravity="center_horizontal"
+        android:textSize="10sp"/>
+</LinearLayout>

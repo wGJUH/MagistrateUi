@@ -194,6 +194,23 @@ public class SqlHelper extends SQLiteOpenHelper {
         close();
         return articles;
     }
+    public ArrayList<ArticleThemeValue> getArticlesForGroup(int groupId){
+        Log.d(Constants.TAG,"Try to get articles for group id");
+        ArrayList<ArticleThemeValue> articles = new ArrayList<>();
+        ArticleThemeValue articleThemeValue;
+        String sqlCmd = "select id, name from manage_groups_articles left join articles on article_id = articles.id where group_id = ?";
+        opendatabase();
+        Cursor cursor = database.rawQuery(sqlCmd,new String[]{Integer.toString(groupId)});
+        if(cursor.moveToFirst()){
+            do {
+                articleThemeValue = new ArticleThemeValue(cursor.getString(cursor.getColumnIndex("name")),cursor.getInt(cursor.getColumnIndex("id")));
+                articles.add(articleThemeValue);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return articles;
+    }
     public int getArticlesIdForName(String name){
         int articleId = -7733;
         String sqlCmd = "select id from articles where name = ?";
@@ -296,6 +313,36 @@ public class SqlHelper extends SQLiteOpenHelper {
         cursor.close();
         close();
         return users;
+    }
+
+
+    public ArrayList<SingleRecord> getUserRecordsByIdAndArticle(String id, int article){
+        ArrayList<SingleRecord> singleRecords = new ArrayList<>();
+        SingleRecord singleRecord;
+       /* String sqlCmd = "select tests.name as 'name', manage_students_tests_result.result as 'result' " +
+                "from manage_students_tests_result " +
+                "left join tests on test_id = tests.id " +
+                "where student_id =? and ";*/
+        String sqlCmd = "select tests.name as 'name', manage_students_tests_result.result as 'result' " +
+                "from manage_students_tests_result " +
+                "left join tests on test_id = tests.id " +
+                "left join themes on tests.theme_id = themes.id " +
+                "where themes.id in " +
+                "(select manage_themes_articles.theme_id " +
+                "from manage_themes_articles where manage_themes_articles.article_id = ?) " +
+                "and student_id = ?";
+        opendatabase();
+        Cursor cursor = database.rawQuery(sqlCmd,new String[]{Integer.toString(article),id});
+        if(cursor.moveToFirst())
+            do {
+                singleRecord = new SingleRecord();
+                singleRecord.setName(cursor.getString(cursor.getColumnIndex("name")));
+                singleRecord.setRecord(cursor.getFloat(cursor.getColumnIndex("result")));
+                singleRecords.add(singleRecord);
+            }while (cursor.moveToNext());
+        cursor.close();
+        close();
+        return singleRecords;
     }
     /**
      * Для проверки регистрации по зачетной книжке

@@ -23,6 +23,7 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.wgjuh.magistrateprojectui.ArticleThemeValue;
 import com.example.wgjuh.magistrateprojectui.Constants;
 import com.example.wgjuh.magistrateprojectui.R;
 import com.example.wgjuh.magistrateprojectui.SqlHelper;
@@ -66,7 +67,7 @@ public class UserActivity extends AppCompatActivity
 
         setSupportActionBar(toolbar);
         userId = getUserConfig().getInt(Constants.USER_ID);
-        userFragment = UserFragment.newInstance(Integer.toString(userId));
+        userFragment = UserFragment.newInstance(userId);
 
 
         getFragmentTransaction()
@@ -197,8 +198,9 @@ public class UserActivity extends AppCompatActivity
             case android.R.id.text1:
 
                 returnToUserFragment();
+
                 sharedPreferences.edit().putString(Constants.LAST_ARTICLE, getSpinnerSelection()).apply();
-                toolbar.setTitle(getSpinnerSelection());
+                //toolbar.setTitle(getSpinnerSelection());
                 break;
             default:
                 break;
@@ -213,7 +215,7 @@ public class UserActivity extends AppCompatActivity
                 getFragmentTransaction().remove(fragment).commit();
             }
             getFragmentTransaction()
-                    .add(R.id.content_user_frame, UserFragment.newInstance(Integer.toString(userId)), UserFragment.class.getName())
+                    .add(R.id.content_user_frame, UserFragment.newInstance(userId), UserFragment.class.getName())
                     .commit();
         }
     }

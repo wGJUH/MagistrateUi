@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:layout_height="300dp"
+    android:weightSum="10">
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/single_pie_chart"
+        android:layout_width="match_parent"
+        android:layout_weight="8"
+        android:layout_height="0dp">
+    </com.github.mikephil.charting.charts.PieChart>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:weightSum="10">
+    <Button
+        android:id="@+id/button_accept"
+        android:text="@string/go_to_test"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"/>
+        <Button
+            android:id="@+id/button_decline"
+            android:text="@string/decline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"/>
+    </LinearLayout>
+</LinearLayout>

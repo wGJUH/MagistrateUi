@@ -26,4 +26,6 @@
     <string name="nav_questions">Questions</string>
     <string name="nav_textbook">Textbook</string>
     <string name="textbook_fragment">TextBook</string>
+    <string name="go_to_test">Перейти к тесту</string>
+    <string name="decline">Закрыть</string>
 </resources>
