@@ -85,7 +85,7 @@ public class ClassmatesFragment extends AbstractFragment {
     @Override
     void initFields(View rootView) {
         recyclerView = (RecyclerView)rootView.findViewById(R.id.classmates_recycler_view);
-        classmatesAdapter = new ClassmatesAdapter(sqlHelper.getClassmatesByGroupId(groupId, userId));
+        classmatesAdapter = new ClassmatesAdapter(this,sqlHelper.getClassmatesByGroupId(groupId, userId));
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(classmatesAdapter);
     }

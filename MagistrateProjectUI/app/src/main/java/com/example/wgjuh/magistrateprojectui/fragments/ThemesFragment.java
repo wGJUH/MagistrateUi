@@ -35,16 +35,18 @@ public class ThemesFragment extends AbstractFragment {
     private OnFragmentInteractionListener mListener;
 
     private RecyclerView themesRecyclerView;
+    private boolean isTesting;
     public ThemesFragment() {
         // Required empty public constructor
     }
 
 
     // TODO: Rename and change types and number of parameters
-    public static ThemesFragment newInstance(int articleId) {
+    public static ThemesFragment newInstance(int articleId, boolean isTesting) {
         ThemesFragment fragment = new ThemesFragment();
         Bundle args = new Bundle();
         args.putInt(Constants.ARTICLE_ID, articleId);
+        args.putBoolean(Constants.IS_TESTING, isTesting);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,6 +56,7 @@ public class ThemesFragment extends AbstractFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             articleId = getArguments().getInt(Constants.ARTICLE_ID);
+            isTesting = getArguments().getBoolean(Constants.IS_TESTING);
         }
         this.setLayoutId(R.layout.fragment_themes);
     }
@@ -80,7 +83,7 @@ public class ThemesFragment extends AbstractFragment {
     void initFields(View rootView) {
         themesRecyclerView = (RecyclerView) rootView.findViewById(R.id.themes_recycler_view);
         themesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        themesRecyclerView.setAdapter(new ListAdapter(this, sqlHelper.getThemes(articleId)));
+        themesRecyclerView.setAdapter(new ListAdapter(this, sqlHelper.getThemes(articleId), isTesting));
 
     }
 

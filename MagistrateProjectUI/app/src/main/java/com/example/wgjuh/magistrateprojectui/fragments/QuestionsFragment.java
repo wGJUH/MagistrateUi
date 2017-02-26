@@ -85,7 +85,7 @@ public class QuestionsFragment extends AbstractFragment {
         recyclerView = (RecyclerView)rootView.findViewById(R.id.questions_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
-        ListAdapter listAdapter = new ListAdapter(this,sqlHelper.getQuestionsForTrain(themeId));
+        ListAdapter listAdapter = new ListAdapter(this,sqlHelper.getQuestionsForTrain(themeId),false);
         recyclerView.setAdapter(listAdapter);
     }
 

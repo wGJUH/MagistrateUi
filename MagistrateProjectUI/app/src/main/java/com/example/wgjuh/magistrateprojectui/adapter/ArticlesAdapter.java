@@ -46,7 +46,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
         holder.articleProgress.setText(Integer.toString(holder.procent)+"%");
         holder.progressBar.setProgress(holder.procent);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
-        holder.recyclerView.setAdapter(new UserRecordAdapter(sqlHelper.getUserRecordsByIdAndArticle(""+userId, articleThemeValues.get(position).getId()),context));
+        holder.recyclerView.setAdapter(new UserRecordAdapter(sqlHelper.getUserRecordsByIdAndArticle(""+userId, articleThemeValues.get(position).getId()),context, userId));
     }
 
 

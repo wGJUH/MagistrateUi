@@ -14,6 +14,7 @@ import com.example.wgjuh.magistrateprojectui.Constants;
 import com.example.wgjuh.magistrateprojectui.CustomDialog;
 import com.example.wgjuh.magistrateprojectui.R;
 import com.example.wgjuh.magistrateprojectui.SingleRecord;
+import com.example.wgjuh.magistrateprojectui.activity.UserActivity;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
@@ -33,9 +34,11 @@ public class UserRecordAdapter extends RecyclerView.Adapter<UserRecordAdapter.Vi
 
     ArrayList<SingleRecord> records;
     Context context;
-    public UserRecordAdapter(ArrayList<SingleRecord> records, Context context){
+    int userId;
+    public UserRecordAdapter(ArrayList<SingleRecord> records, Context context, int userId){
         this.records = records;
         this.context = context;
+        this.userId = userId;
     }
 
 
@@ -58,7 +61,6 @@ public class UserRecordAdapter extends RecyclerView.Adapter<UserRecordAdapter.Vi
         holder.pieChart.setMaxAngle(360.0f * (records.get(position).getRecord() / 100));
         Log.d(Constants.TAG,"Angle: " + holder.pieChart.getMaxAngle());
         holder.pieChart.setHoleRadius(70);
-        holder.pieChart.setTransparentCircleRadius(100);
         holder.pieChart.setCenterTextSize(10);
         holder.pieChart.getLegend().setEnabled(false);
         holder.pieChart.getDescription().setEnabled(false);
@@ -108,7 +110,8 @@ public class UserRecordAdapter extends RecyclerView.Adapter<UserRecordAdapter.Vi
             super(itemView);
             this.context = context;
             pieChart = (PieChart)itemView.findViewById(R.id.user_record_pie_chart);
-            pieChart.setOnClickListener(this);
+            if (Constants.loginId == userId)
+                pieChart.setOnClickListener(this);
             textView = (TextView) itemView.findViewById(R.id.text_user_record);
 
         }

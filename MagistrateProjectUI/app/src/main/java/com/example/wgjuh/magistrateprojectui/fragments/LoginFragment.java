@@ -39,6 +39,8 @@ public class LoginFragment extends AbstractFragment implements View.OnClickListe
 
     private OnFragmentInteractionListener mListener;
 
+
+
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -157,6 +159,8 @@ public class LoginFragment extends AbstractFragment implements View.OnClickListe
 
     private void startUserActivityForId(int id) {
         Log.d(Constants.TAG, "Starting activity for user with id: " + id);
+        if(Constants.loginId != id)
+            Constants.loginId = id;
         Intent intent = new Intent(getActivity(), UserActivity.class);
         intent.putExtra(Constants.USER_ID, id);
         startActivity(intent);

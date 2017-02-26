@@ -14,6 +14,7 @@ import com.example.wgjuh.magistrateprojectui.Constants;
 import com.example.wgjuh.magistrateprojectui.R;
 import com.example.wgjuh.magistrateprojectui.fragments.AbstractFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.QuestionsFragment;
+import com.example.wgjuh.magistrateprojectui.fragments.TestFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.TextbookFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.ThemesFragment;
 
@@ -25,12 +26,14 @@ import java.util.ArrayList;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
-   public static ArrayList<ArticleThemeValue> items;
+    ArrayList<ArticleThemeValue> items;
     AbstractFragment fragment;
-    public ListAdapter(AbstractFragment fragment, ArrayList<ArticleThemeValue>  items){
+    Boolean isTesting;
+    public ListAdapter(AbstractFragment fragment, ArrayList<ArticleThemeValue>  items, boolean isTesting){
         Log.d(Constants.TAG,"ListAdpater: " + items.size());
         this.items = items;
         this.fragment = fragment;
+        this.isTesting = isTesting;
     }
 
     @Override
@@ -57,7 +60,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         return items.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView textView;
         AbstractFragment fragment;
         ViewHolder(AbstractFragment fragment, View itemView) {
@@ -73,15 +76,27 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
         @Override
         public void onClick(View v) {
+
             if (fragment instanceof ThemesFragment){
-                QuestionsFragment questionsFragment = QuestionsFragment.newInstance(items.get(getAdapterPosition()).getId());
-                fragment.getActivity()
-                        .getSupportFragmentManager()
-                        .beginTransaction()
-                        .setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.slide_out_right, android.R.anim.slide_in_left,android.R.anim.slide_out_right)
-                        .replace(R.id.content_user_frame,questionsFragment,QuestionsFragment.class.getName())
-                        .addToBackStack(fragment.getTag())
-                        .commit();
+                if(!isTesting) {
+                    QuestionsFragment questionsFragment = QuestionsFragment.newInstance(items.get(getAdapterPosition()).getId());
+                    fragment.getActivity()
+                            .getSupportFragmentManager()
+                            .beginTransaction()
+                            .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                            .replace(R.id.content_user_frame, questionsFragment, QuestionsFragment.class.getName())
+                            .addToBackStack(fragment.getTag())
+                            .commit();
+                }else{
+                   TestFragment testFragment = TestFragment.newInstance(items.get(getAdapterPosition()).getId());
+                    fragment.getActivity()
+                            .getSupportFragmentManager()
+                            .beginTransaction()
+                            .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                            .replace(R.id.content_user_frame, testFragment, TestFragment.class.getName())
+                            .addToBackStack(fragment.getTag())
+                            .commit();
+                }
             }
 
         }

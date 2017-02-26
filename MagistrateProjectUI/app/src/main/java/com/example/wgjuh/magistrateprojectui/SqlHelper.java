@@ -410,6 +410,28 @@ public class SqlHelper extends SQLiteOpenHelper {
         close();
         return singleRecords;
     }
+    public String getUserName(int userId){
+        String sqlCmd = "select name from students where id =?";
+        String name="";
+        opendatabase();
+        Cursor cursor = database.rawQuery(sqlCmd,new String[]{Integer.toString(userId)});
+        if (cursor.moveToFirst())
+            name = cursor.getString(0);
+        cursor.close();
+        close();
+        return name;
+    }
+    public String getUserEmail(int userId){
+        String sqlCmd = "select email from students where id =?";
+        String name="";
+        opendatabase();
+        Cursor cursor = database.rawQuery(sqlCmd,new String[]{Integer.toString(userId)});
+        if (cursor.moveToFirst())
+            name = cursor.getString(0);
+        cursor.close();
+        close();
+        return name;
+    }
     /**
      * Для проверки регистрации по зачетной книжке
      *

@@ -88,7 +88,7 @@ public class TextbookFragment extends AbstractFragment {
         recyclerView = (RecyclerView)rootView.findViewById(R.id.library_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         Log.d(Constants.TAG,"TextBookRecive articleId = " + articleId);
-        recyclerView.setAdapter(new ListAdapter(this,sqlHelper.getBooksForArticle(articleId)));
+        recyclerView.setAdapter(new ListAdapter(this,sqlHelper.getBooksForArticle(articleId),false));
     }
 
     @Override

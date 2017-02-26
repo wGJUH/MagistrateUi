@@ -20,7 +20,6 @@ import static com.example.wgjuh.magistrateprojectui.Constants.*;
 public class LoginActivity extends AppCompatActivity implements AbstractFragment.OnFragmentInteractionListener {
     private FrameLayout frameLoginPage;
     private LoginFragment loginFragment;
-    private Animation slide_in_left,slide_out_right;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +28,7 @@ public class LoginActivity extends AppCompatActivity implements AbstractFragment
         loginFragment = new LoginFragment();
         frameLoginPage = ((FrameLayout)findViewById(R.id.frame_login_page));
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
         fragmentTransaction.add(frameLoginPage.getId(), loginFragment,TAG_LOGIN_FRAGMENT).commit();
     }
 
@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements AbstractFragment
     @Override
     public void onFragmentInteraction(String tag) {
         Log.d(Constants.TAG,"tag is: " + tag);
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.slide_out_right, android.R.anim.slide_in_left,android.R.anim.slide_out_right)

@@ -1,15 +1,13 @@
 package com.example.wgjuh.magistrateprojectui.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.wgjuh.magistrateprojectui.Constants;
 import com.example.wgjuh.magistrateprojectui.R;
+import com.example.wgjuh.magistrateprojectui.TestClass;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,9 +20,9 @@ import com.example.wgjuh.magistrateprojectui.R;
 public class TestFragment extends AbstractFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
+    private TestClass testClass;
     // TODO: Rename and change types of parameters
-    private int userId;
+    private int testId;
 
     private OnFragmentInteractionListener mListener;
 
@@ -43,7 +41,7 @@ public class TestFragment extends AbstractFragment {
     public static TestFragment newInstance(int userId) {
         TestFragment fragment = new TestFragment();
         Bundle args = new Bundle();
-        args.putInt(Constants.USER_ID, userId);
+        args.putInt(Constants.TEST_ID, userId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,14 +50,15 @@ public class TestFragment extends AbstractFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            userId = getArguments().getInt(Constants.USER_ID);
+            testId = getArguments().getInt(Constants.TEST_ID);
         }
         setLayoutId(R.layout.fragment_test);
     }
 
+    // TODO: 26.02.2017 СДЕЛАТЬ ОТОБРАЖЕНИЕ ТЕСТОВ ПО ТЕМЕ 
     @Override
     void initFields(View rootView) {
-
+        testClass = new TestClass(testId,getActivity());
     }
 
     @Override
@@ -67,13 +66,6 @@ public class TestFragment extends AbstractFragment {
 
     }
 
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -92,18 +84,4 @@ public class TestFragment extends AbstractFragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

@@ -58,6 +58,7 @@ public class UserActivity extends AppCompatActivity
     private SqlHelper sqlHelper;
     private SharedPreferences sharedPreferences;
     private Toolbar toolbar;
+
     private String currentArticle;
 
     @Override
@@ -68,6 +69,7 @@ public class UserActivity extends AppCompatActivity
 
         setSupportActionBar(toolbar);
         userId = getUserConfig().getInt(Constants.USER_ID);
+
         userFragment = UserFragment.newInstance(userId);
 
 
@@ -94,6 +96,12 @@ public class UserActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        ((TextView)navigationView.getHeaderView(0).findViewById(R.id.header_user_name)).setText(sqlHelper.getUserName(userId));
+        ((TextView)navigationView.getHeaderView(0).findViewById(R.id.header_user_email)).setText(sqlHelper.getUserEmail(userId));
+
+
+
         spinner = (Spinner)navigationView.getMenu().findItem(R.id.nav_spinner).getActionView();//findViewById(R.id.nav_spinner);
         spinner.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,sqlHelper.getArticlesForGroupId(sqlHelper.getGroupIdByUserId(userId))));
         spinner.setSelection(getIndexOfCurrentSharedArticle());
@@ -170,11 +178,11 @@ public class UserActivity extends AppCompatActivity
         if (id == R.id.nav_textbook) {
             fragmentTransaction.replace(R.id.content_user_frame,TextbookFragment.newInstance(sqlHelper.getArticlesIdForName(getSpinnerSelection())),TextbookFragment.class.getName());
         } else if (id == R.id.nav_questions) {
-            fragmentTransaction.replace(R.id.content_user_frame, ThemesFragment.newInstance(sqlHelper.getArticlesIdForName(getSpinnerSelection())),ThemesFragment.class.getName());
+            fragmentTransaction.replace(R.id.content_user_frame, ThemesFragment.newInstance(sqlHelper.getArticlesIdForName(getSpinnerSelection()),false),ThemesFragment.class.getName());
         } else if (id == R.id.nav_classmates) {
             fragmentTransaction.replace(R.id.content_user_frame, ClassmatesFragment.newInstance(sqlHelper.getGroupIdByUserId(userId),userId),ClassmatesFragment.class.getName());
         } else if (id == R.id.nav_tests) {
-            fragmentTransaction.replace(R.id.content_user_frame, TestFragment.newInstance(userId),TestFragment.class.getName());
+            fragmentTransaction.replace(R.id.content_user_frame, ThemesFragment.newInstance(sqlHelper.getArticlesIdForName(getSpinnerSelection()),true),ThemesFragment.class.getName());
         } else if (id == R.id.nav_about) {
 
         }
