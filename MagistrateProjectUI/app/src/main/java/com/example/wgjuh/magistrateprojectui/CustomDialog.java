@@ -4,8 +4,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.example.wgjuh.magistrateprojectui.adapter.UserRecordAdapter;
 import com.github.mikephil.charting.charts.PieChart;
@@ -20,10 +22,11 @@ import java.util.ArrayList;
  * Created by wGJUH on 25.02.2017.
  */
 
-public class CustomDialog extends Dialog {
+public class CustomDialog extends Dialog implements View.OnClickListener{
     PieChart pieChart;
     float percent;
     String name;
+    Button buttonAccept, buttonDecline;
     public CustomDialog(Context context, float percent, String name) {
         super(context);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -43,6 +46,11 @@ public class CustomDialog extends Dialog {
     void initFields(){
         pieChart = (PieChart)findViewById(R.id.single_pie_chart);
         setPieChartSettings();
+        buttonAccept = (Button)findViewById(R.id.button_accept);
+        buttonDecline = (Button)findViewById(R.id.button_decline);
+        buttonAccept.setOnClickListener(this);
+        buttonDecline.setOnClickListener(this);
+
     }
     void setPieChartSettings(){
 
@@ -70,5 +78,19 @@ public class CustomDialog extends Dialog {
         pieData.setValueTextSize(11f);
         pieData.setValueTextColor(Color.GRAY);
         return pieData;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.button_accept:
+                break;
+            case R.id.button_decline:
+                dismiss();
+                break;
+            default:
+                dismiss();
+                break;
+        }
     }
 }

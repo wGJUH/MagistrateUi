@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import junit.framework.Test;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -194,6 +196,51 @@ public class SqlHelper extends SQLiteOpenHelper {
         close();
         return articles;
     }
+
+    public ArrayList<TestClass.Question> getQuestionsForTest(TestClass testClass){
+        ArrayList<TestClass.Question> questions = new ArrayList<>();
+        TestClass.Question question;
+        String sqlCmd = "select * from questions where test_id =?";
+        opendatabase();
+            Cursor cursor = database.rawQuery(sqlCmd, new String[]{Integer.toString(testClass.getTestId())});
+        if (cursor.moveToFirst())
+            do {
+                question = testClass.newQuestion();
+                question.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                question.setText(cursor.getString(cursor.getColumnIndex("name")));
+                questions.add(question);
+            }while (cursor.moveToNext());
+        cursor.close();
+        close();
+        return questions;
+    }
+
+    public ArrayList<ArrayList<TestClass.Answer>> getAnswersForQuestions(ArrayList<TestClass.Question> questions, TestClass testClass){
+        ArrayList<TestClass.Answer> answersForQuestion;
+        ArrayList<ArrayList<TestClass.Answer>> answers = new ArrayList<>();
+        TestClass.Answer answer;
+        String sqlCmd = "select answers.id, answers.name from answers where answers.theme_id = (select questions.theme_id from questions where questions.id = ?)";
+        opendatabase();
+
+        for (TestClass.Question question: questions) {
+            Cursor cursor = database.rawQuery(sqlCmd,new String[]{Integer.toString(question.getId())});
+            if (cursor.moveToFirst())
+                do {
+                    answer = question.newAnswer();
+                    answersForQuestion = new ArrayList<>();
+                    answer.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                    answer.setText(cursor.getString(cursor.getColumnIndex("name")));
+                    answersForQuestion.add(answer);
+                }while (cursor.moveToNext());
+            else break;
+            cursor.close();
+            answers.add(answersForQuestion);
+        }
+        close();
+        return answers;
+    }
+
+
     public ArrayList<ArticleThemeValue> getArticlesForGroup(int groupId){
         Log.d(Constants.TAG,"Try to get articles for group id");
         ArrayList<ArticleThemeValue> articles = new ArrayList<>();
@@ -211,6 +258,25 @@ public class SqlHelper extends SQLiteOpenHelper {
         close();
         return articles;
     }
+
+    public int getTestResultForArticle(int articleId, int userId){
+        int procent=0;
+        String sqlCmd = "select sum(manage_students_tests_result.result)*100/(count(manage_students_tests_result.result)*100) " +
+                "from manage_students_tests_result " +
+                "left join tests on manage_students_tests_result.test_id = tests.id " +
+                "left join manage_themes_articles on manage_themes_articles.theme_id = tests.theme_id " +
+                "where manage_themes_articles.article_id = ? " +
+                "and manage_students_tests_result.student_id = ?";
+        opendatabase();
+        Cursor cursor = database.rawQuery(sqlCmd,new String[]{Integer.toString(articleId),Integer.toString(userId)});
+            if(cursor.moveToFirst())
+                procent = cursor.getInt(0);
+        cursor.close();
+        close();
+        return procent;
+    }
+
+
     public int getArticlesIdForName(String name){
         int articleId = -7733;
         String sqlCmd = "select id from articles where name = ?";

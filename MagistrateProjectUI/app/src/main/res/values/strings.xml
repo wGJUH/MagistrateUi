@@ -28,4 +28,5 @@
     <string name="textbook_fragment">TextBook</string>
     <string name="go_to_test">Перейти к тесту</string>
     <string name="decline">Закрыть</string>
+    <string name="nav_tests">Tests</string>
 </resources>

@@ -58,7 +58,7 @@ public class UserRecordAdapter extends RecyclerView.Adapter<UserRecordAdapter.Vi
         holder.pieChart.setMaxAngle(360.0f * (records.get(position).getRecord() / 100));
         Log.d(Constants.TAG,"Angle: " + holder.pieChart.getMaxAngle());
         holder.pieChart.setHoleRadius(70);
-        holder.pieChart.setTransparentCircleRadius(0);
+        holder.pieChart.setTransparentCircleRadius(100);
         holder.pieChart.setCenterTextSize(10);
         holder.pieChart.getLegend().setEnabled(false);
         holder.pieChart.getDescription().setEnabled(false);

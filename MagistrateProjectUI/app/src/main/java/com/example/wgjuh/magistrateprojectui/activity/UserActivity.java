@@ -30,6 +30,7 @@ import com.example.wgjuh.magistrateprojectui.SqlHelper;
 import com.example.wgjuh.magistrateprojectui.fragments.AbstractFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.ClassmatesFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.QuestionsFragment;
+import com.example.wgjuh.magistrateprojectui.fragments.TestFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.TextbookFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.ThemesFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.UserFragment;
@@ -172,8 +173,8 @@ public class UserActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.content_user_frame, ThemesFragment.newInstance(sqlHelper.getArticlesIdForName(getSpinnerSelection())),ThemesFragment.class.getName());
         } else if (id == R.id.nav_classmates) {
             fragmentTransaction.replace(R.id.content_user_frame, ClassmatesFragment.newInstance(sqlHelper.getGroupIdByUserId(userId),userId),ClassmatesFragment.class.getName());
-        } else if (id == R.id.nav_results) {
-
+        } else if (id == R.id.nav_tests) {
+            fragmentTransaction.replace(R.id.content_user_frame, TestFragment.newInstance(userId),TestFragment.class.getName());
         } else if (id == R.id.nav_about) {
 
         }
