@@ -22,7 +22,7 @@ public class TestsListAdapter extends RecyclerView.Adapter<TestsListAdapter.View
     public TestsListAdapter(ArrayList<SingleRecord> singleRecords){
         this.singleRecords = singleRecords;
     }
-
+    //**
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_tests_list_item,parent,false);
