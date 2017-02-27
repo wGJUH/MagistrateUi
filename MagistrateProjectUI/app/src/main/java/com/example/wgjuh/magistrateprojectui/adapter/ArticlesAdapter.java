@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.wgjuh.magistrateprojectui.ArticleThemeValue;
 import com.example.wgjuh.magistrateprojectui.R;
+import com.example.wgjuh.magistrateprojectui.SingleRecord;
 import com.example.wgjuh.magistrateprojectui.SqlHelper;
 
 import java.util.ArrayList;
@@ -41,12 +42,13 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        ArrayList<SingleRecord> singleRecords = sqlHelper.getUserRecordsByIdAndArticle(""+userId, articleThemeValues.get(position).getId());
         holder.textView.setText(articleThemeValues.get(position).getArticleName());
-        holder.procent = sqlHelper.getTestResultForArticle(articleThemeValues.get(position).getId(),userId);
+        holder.procent = sqlHelper.getTestResultForArticle(articleThemeValues.get(position).getId(),userId,singleRecords.size());
         holder.articleProgress.setText(Integer.toString(holder.procent)+"%");
         holder.progressBar.setProgress(holder.procent);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
-        holder.recyclerView.setAdapter(new UserRecordAdapter(sqlHelper.getUserRecordsByIdAndArticle(""+userId, articleThemeValues.get(position).getId()),context, userId));
+        holder.recyclerView.setAdapter(new UserRecordAdapter(singleRecords,context,userId));
     }
 
 

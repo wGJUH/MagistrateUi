@@ -3,17 +3,16 @@ package com.example.wgjuh.magistrateprojectui.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.StrictMode;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,30 +22,19 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.wgjuh.magistrateprojectui.ArticleThemeValue;
 import com.example.wgjuh.magistrateprojectui.Constants;
 import com.example.wgjuh.magistrateprojectui.R;
 import com.example.wgjuh.magistrateprojectui.SqlHelper;
 import com.example.wgjuh.magistrateprojectui.fragments.AbstractFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.ClassmatesFragment;
-import com.example.wgjuh.magistrateprojectui.fragments.QuestionsFragment;
-import com.example.wgjuh.magistrateprojectui.fragments.TestFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.TextbookFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.ThemesFragment;
 import com.example.wgjuh.magistrateprojectui.fragments.UserFragment;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import static com.example.wgjuh.magistrateprojectui.Constants.ARTICLE_PREF;
 import static com.example.wgjuh.magistrateprojectui.Constants.LAST_ARTICLE;
-import static com.example.wgjuh.magistrateprojectui.Constants.TAG;
 
 public class UserActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AbstractFragment.OnFragmentInteractionListener, AdapterView.OnItemSelectedListener{
@@ -178,11 +166,11 @@ public class UserActivity extends AppCompatActivity
         if (id == R.id.nav_textbook) {
             fragmentTransaction.replace(R.id.content_user_frame,TextbookFragment.newInstance(sqlHelper.getArticlesIdForName(getSpinnerSelection())),TextbookFragment.class.getName());
         } else if (id == R.id.nav_questions) {
-            fragmentTransaction.replace(R.id.content_user_frame, ThemesFragment.newInstance(sqlHelper.getArticlesIdForName(getSpinnerSelection()),false),ThemesFragment.class.getName());
+            fragmentTransaction.replace(R.id.content_user_frame, ThemesFragment.newInstance(sqlHelper.getArticlesIdForName(getSpinnerSelection()),false,userId),ThemesFragment.class.getName());
         } else if (id == R.id.nav_classmates) {
             fragmentTransaction.replace(R.id.content_user_frame, ClassmatesFragment.newInstance(sqlHelper.getGroupIdByUserId(userId),userId),ClassmatesFragment.class.getName());
         } else if (id == R.id.nav_tests) {
-            fragmentTransaction.replace(R.id.content_user_frame, ThemesFragment.newInstance(sqlHelper.getArticlesIdForName(getSpinnerSelection()),true),ThemesFragment.class.getName());
+            fragmentTransaction.replace(R.id.content_user_frame, ThemesFragment.newInstance(sqlHelper.getArticlesIdForName(getSpinnerSelection()),true,userId),ThemesFragment.class.getName());
         } else if (id == R.id.nav_about) {
 
         }

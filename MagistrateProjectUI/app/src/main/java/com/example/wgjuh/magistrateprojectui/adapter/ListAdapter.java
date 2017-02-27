@@ -1,7 +1,5 @@
 package com.example.wgjuh.magistrateprojectui.adapter;
 
-import android.app.Fragment;
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,13 +27,20 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     ArrayList<ArticleThemeValue> items;
     AbstractFragment fragment;
     Boolean isTesting;
+    int userId;
     public ListAdapter(AbstractFragment fragment, ArrayList<ArticleThemeValue>  items, boolean isTesting){
         Log.d(Constants.TAG,"ListAdpater: " + items.size());
         this.items = items;
         this.fragment = fragment;
         this.isTesting = isTesting;
     }
-
+    public ListAdapter(AbstractFragment fragment, ArrayList<ArticleThemeValue>  items, boolean isTesting,int userId){
+        Log.d(Constants.TAG,"ListAdpater: " + items.size());
+        this.items = items;
+        this.fragment = fragment;
+        this.isTesting = isTesting;
+        this.userId = userId;
+    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.d(Constants.TAG,"onCreateViewHolder ");
@@ -88,7 +93,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                             .addToBackStack(fragment.getTag())
                             .commit();
                 }else{
-                   TestFragment testFragment = TestFragment.newInstance(items.get(getAdapterPosition()).getId());
+                   TestFragment testFragment = TestFragment.newInstance(items.get(getAdapterPosition()).getId(), userId);
                     fragment.getActivity()
                             .getSupportFragmentManager()
                             .beginTransaction()
