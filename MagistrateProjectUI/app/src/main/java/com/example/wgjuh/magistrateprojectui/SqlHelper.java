@@ -327,6 +327,7 @@ public class SqlHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst())
             do {
                 question = testClass.newQuestion();
+                question.setType(cursor.getInt(cursor.getColumnIndex("question_type_id")));
                 question.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 question.setText(cursor.getString(cursor.getColumnIndex("name")));
                 questions.add(question);
@@ -340,19 +341,20 @@ public class SqlHelper extends SQLiteOpenHelper {
         ArrayList<TestClass.Answer> answersForQuestion;
         ArrayList<ArrayList<TestClass.Answer>> answers = new ArrayList<>();
         TestClass.Answer answer;
-        String sqlCmd = "select answers.id, answers.name from answers where answers.theme_id = (select questions.theme_id from questions where questions.id = ?)";
+        String sqlCmd = "select answers.id, answers.name from answers where answers.theme_id = (select tests.theme_id from tests where tests.id = ?) and answers.question_id = ?";
         opendatabase();
 
         for (TestClass.Question question : questions) {
-            Cursor cursor = database.rawQuery(sqlCmd, new String[]{Integer.toString(question.getId())});
-            if (cursor.moveToFirst())
+            Cursor cursor = database.rawQuery(sqlCmd, new String[]{Integer.toString(testClass.getTestId()),Integer.toString(question.getId())});
+            if (cursor.moveToFirst()) {
+                answersForQuestion = new ArrayList<>();
                 do {
                     answer = question.newAnswer();
-                    answersForQuestion = new ArrayList<>();
                     answer.setId(cursor.getInt(cursor.getColumnIndex("id")));
                     answer.setText(cursor.getString(cursor.getColumnIndex("name")));
                     answersForQuestion.add(answer);
                 } while (cursor.moveToNext());
+            }
             else break;
             cursor.close();
             answers.add(answersForQuestion);

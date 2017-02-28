@@ -23,7 +23,6 @@ import com.example.wgjuh.magistrateprojectui.adapter.TestsListAdapter;
 public class TestFragment extends AbstractFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private TestClass testClass;
     // TODO: Rename and change types of parameters
     private int themeId;
     private int userId;
@@ -70,10 +69,9 @@ public class TestFragment extends AbstractFragment {
     // TODO: 26.02.2017 СДЕЛАТЬ ОТОБРАЖЕНИЕ ТЕСТОВ ПО ТЕМЕ 
     @Override
     void initFields(View rootView) {
-        testClass = new TestClass(themeId,getActivity());
         recyclerView = (RecyclerView)rootView.findViewById(R.id.test_list_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new TestsListAdapter(sqlHelper.getUserRecordsByIdAndTheme(""+userId,themeId)));
+        recyclerView.setAdapter(new TestsListAdapter(sqlHelper.getUserRecordsByIdAndTheme(""+userId,themeId),this));
 
     }
 

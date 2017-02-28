@@ -1,6 +1,7 @@
 package com.example.wgjuh.magistrateprojectui;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ public class TestClass {
             sqlHelper = SqlHelper.getInstance(context);
             setQuestionsFromDb();
             setAnswers();
-
+            Log.d(Constants.TAG,"wait");
         }
 
     public int getTestId() {
@@ -35,6 +36,9 @@ public class TestClass {
         questions = sqlHelper.getQuestionsForTest(this);
     }
 
+    public int size(){
+        return questions.size();
+    }
 
     public Question newQuestion(){
         return  new Question();
@@ -47,13 +51,23 @@ public class TestClass {
 
     class Question{
         int id;
+        int type;
         String text;
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
         public void setId(int id) {
             this.id = id;
         }
 
         public void setText(String text) {
             this.text = text;
+        }
+
+        public int getType() {
+            return type;
         }
 
         public int getId() {
