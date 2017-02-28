@@ -15,8 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/input_record_number"
-            android:textSize="20sp"
-            android:layout_marginTop="150dp"/>
+            android:textSize="20sp"/>
         <EditText
             android:id="@+id/edit_text_record_book"
             android:layout_below="@+id/text_record_book"
@@ -43,15 +42,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/input_feel_registration_data"
-            android:textSize="20sp"
-            android:layout_marginTop="150dp"/>
+            android:textSize="20sp"/>
         <TextView
             android:id="@+id/textview_record_book"
             android:layout_below="@id/text_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:text="!!@!@!@sdSds"
             />
         <EditText
             android:id="@+id/edit_text_fio"
